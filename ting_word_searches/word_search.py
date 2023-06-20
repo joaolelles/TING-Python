@@ -4,20 +4,16 @@ def exists_word(word, instance):
 
     for i in range(len(instance)):
         file_info = instance.search(i)
-
-        if isinstance(file_info, dict):
-            file_name = file_info["file"]
-        else:
-            file_name = file_info
+        file_name = (
+            file_info["file"] if isinstance(file_info, dict) else file_info
+        )
 
         lines_with_word = []
 
         with open(file_name, "r") as file:
             for line_number, line in enumerate(file, start=1):
                 if new_word in line.lower():
-                    lines_with_word.append(
-                        {"conteudo": line.strip(), "linha": line_number}
-                    )
+                    lines_with_word.append(line_number)
 
         if lines_with_word:
             result.append(
